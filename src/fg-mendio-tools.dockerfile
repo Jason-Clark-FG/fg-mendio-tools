@@ -5,6 +5,8 @@ FROM ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DOTNET_VERSION
 
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 USER root
 
 # Ref: https://stackoverflow.com/questions/73753672/a-fatal-error-occurred-the-folder-usr-share-dotnet-host-fxr-does-not-exist/73899341#73899341
