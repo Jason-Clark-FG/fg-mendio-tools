@@ -21,10 +21,12 @@ RUN apt-get update; \
     curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/microsoft.gpg && chmod go+r /etc/apt/keyrings/microsoft.gpg; \
     printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main\n" > /etc/apt/sources.list.d/azure-cli.list; \
     apt-get update; \
-    apt-get --assume-yes --no-install-recommends install azure-cli dotnet-sdk-${DOTNET_VERSION} git jq nodejs nuget; \
+    apt-get --assume-yes --no-install-recommends install azure-cli dotnet-sdk-${DOTNET_VERSION} git jq nodejs mono-complete; \
     az extension add --name azure-devops; \
     curl -fsSL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq && chmod +x /usr/bin/yq; \
     curl -fsSL https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend; \
+    curl -fsSL https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o /usr/local/bin/nuget.exe && chmod +x /usr/local/bin/nuget.exe; \
+    printf "%s\n" "mono /usr/local/bin/nuget.exe \$@" > /usr/local/bin/nuget && chmod +x /usr/local/bin/nuget; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
