@@ -25,8 +25,8 @@ RUN apt-get update; \
     az extension add --name azure-devops; \
     curl -fsSL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq && chmod +x /usr/bin/yq; \
     curl -fsSL https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend; \
-    curl -fsSL https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o /usr/local/bin/nuget.exe; \
-    printf "%s\n" "alias nuget=\"mono /usr/local/bin/nuget.exe\"" > /root/.bash_aliases; \
+    curl -fsSL https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -o /usr/local/bin/nuget.exe && chmod +x /usr/local/bin/nuget.exe; \
+    printf "\n%s\n%s\n\n" "# System Wide Bash Aliases" "alias nuget=\"mono /usr/local/bin/nuget.exe\"" >> /etc/bash.bashrc; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
