@@ -5,7 +5,10 @@ FROM ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DOTNET_VERSION
 
-ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+# Ref: https://github.com/dotnet/docs/blob/main/docs/core/tools/dotnet-environment-variables.md
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
+    DOTNET_RUNNING_IN_CONTAINER=1 \
+    DOTNET_RUNNING_IN_CONTAINERS=1
 
 USER root
 
@@ -21,7 +24,7 @@ RUN apt-get update; \
     curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/microsoft.gpg && chmod go+r /etc/apt/keyrings/microsoft.gpg; \
     printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main\n" > /etc/apt/sources.list.d/azure-cli.list; \
     apt-get update; \
-    apt-get --assume-yes --no-install-recommends install azure-cli dotnet-sdk-${DOTNET_VERSION} git jq nodejs mono-complete; \
+    apt-get --assume-yes --no-install-recommends install azure-cli dotnet-sdk-${DOTNET_VERSION} git jq npm mono-complete; \
     az extension add --name azure-devops; \
     curl -fsSL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq && chmod +x /usr/bin/yq; \
     curl -fsSL https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend; \
